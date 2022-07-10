@@ -2,9 +2,12 @@ from dashboard_functions import *
 
 st.set_page_config(layout="wide")
 
-# Setting the selected client ID in session state
+# Initializing session state
 if "client_id" not in st.session_state:
     st.session_state.client_id = ''
+
+if 'action' not in st.session_state:
+    st.session_state.action = 'Parcourir les données'
 
 # Creating sidebar
 show_sidebar(st.session_state)

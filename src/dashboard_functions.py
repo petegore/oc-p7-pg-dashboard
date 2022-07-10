@@ -5,11 +5,10 @@ import seaborn as sns
 import streamlit as st
 
 # Loading the dataset used for training the data
-TRAIN_SET_PATH = '../data/train_set.csv'
-TEST_SET_PATH = '../data/test_set.csv'
+TRAIN_SET_PATH = './data/train_set.csv'
+TEST_SET_PATH = './data/test_set.csv'
 PREDICTIONS_LABELS = ['CREDIT ACCORDE', 'CREDIT REFUSE']
 PREDICTIONS_COLORS = ['darkgreen', 'firebrick']
-
 
 @st.cache
 def get_train_set():
@@ -97,9 +96,9 @@ def show_browsing_content():
 
             range = st.slider(
                 'Choisissez un intervalle de valeurs',
-                min_value=data[selected_feature].min(),
-                max_value=data[selected_feature].max(),
-                value=[data[selected_feature].min(), data[selected_feature].max()]
+                min_value=float(data[selected_feature].min()),
+                max_value=float(data[selected_feature].max()),
+                value=[float(data[selected_feature].min()), float(data[selected_feature].max())]
             )
             separate_targets = st.checkbox("Séparer les clients acceptés et refusés")
 
