@@ -14,6 +14,7 @@ MODEL_PATH = './model/lgbm.pkl'
 PREDICTIONS_LABELS = ['CREDIT ACCORDE', 'CREDIT REFUSE']
 PREDICTIONS_COLORS = ['darkgreen', 'firebrick']
 SCORING_API_URI = "https://infinite-dawn-93145.herokuapp.com/"
+PREDICTION_THRESHOLD = 0.05
 
 
 @st.cache
@@ -265,6 +266,20 @@ def plot_score(prediction, probability):
         color=list(reversed(PREDICTIONS_COLORS))
     )
 
+    plt.vlines(
+        x=PREDICTION_THRESHOLD,
+        ymin=plt.gca().get_ylim()[0],
+        ymax=plt.gca().get_ylim()[1],
+        color='white',
+        linestyle='--'
+    )
+
+    plt.text(
+        x=PREDICTION_THRESHOLD,
+        y=1.1,
+        s='Seuil d\'acceptation'
+    )
+
     if prediction == 0:
         plt.text(
             left_bar_w + right_bar_w / 2 - 0.05,
@@ -306,7 +321,7 @@ def plot_client_position(train_set, client_row, feature_name):
         x=feature_name,
         ax=axes[0],
         bins=20,
-        color=PREDICTIONS_COLORS[1]
+        color=PREDICTIONS_COLORS[0]
     )
     axes[0].vlines(
         x=client_row[feature_name],
@@ -328,7 +343,7 @@ def plot_client_position(train_set, client_row, feature_name):
         x=feature_name,
         ax=axes[1],
         bins=20,
-        color=PREDICTIONS_COLORS[0]
+        color=PREDICTIONS_COLORS[1]
     )
     axes[1].vlines(
         x=client_row[feature_name],
@@ -366,8 +381,8 @@ def plot_local_feature_importance(client_id):
     explainer = lime_tabular.LimeTabularExplainer(
         train_set[train_features].to_numpy(),
         mode="classification",
-        class_names=PREDICTIONS_LABELS,
         feature_names=train_features,
+        class_names=PREDICTIONS_LABELS
     )
 
     explanation = explainer.explain_instance(
