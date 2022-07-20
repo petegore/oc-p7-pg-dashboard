@@ -228,6 +228,7 @@ def get_model_features_importance():
     return features
 
 
+@st.cache
 def predict_client(client_id):
     """ Calls the API to get the prediction and probability of the client
 
@@ -239,6 +240,7 @@ def predict_client(client_id):
     return predictions
 
 
+@st.cache
 def plot_score(prediction, probability):
     """ Plot the global score bar of the client
 
@@ -305,6 +307,7 @@ def plot_score(prediction, probability):
     st.pyplot(fig)
 
 
+@st.cache
 def plot_client_position(train_set, client_row, feature_name):
     """ Plot the position of current customer into the feature distributions for each target
 
@@ -362,6 +365,7 @@ def plot_client_position(train_set, client_row, feature_name):
     st.pyplot(fig)
 
 
+@st.cache
 def plot_local_feature_importance(client_id):
     """ Plot the local feature importance figure
 
